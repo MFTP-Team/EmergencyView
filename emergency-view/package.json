@@ -12,7 +12,9 @@
   "dependencies": {
     "pinia": "^2.0.26",
     "vue": "^3.2.45",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue3-openlayers": "^0.1.71",
+    "vuetify": "3.0.4"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
