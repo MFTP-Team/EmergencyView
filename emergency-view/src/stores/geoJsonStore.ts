@@ -5,9 +5,9 @@ import { defineStore } from 'pinia'
 export const useGeoJsonStore = defineStore({
     id:'geoJsonStore',
     state: () => ({
-        geoJsonStoreFires:"src/components/json-fires-test.json",
-        geoJsonStoreStations:"src/components/json-stations-test.json",
-        geoJsonStoreTrucks:"src/components/json-trucks-test.json",
+        geoJsonStoreFires:"src/assets/ressources-test/json-fires-test.json",
+        geoJsonStoreStations:"src/assets/ressources-test/json-stations-test.json",
+        geoJsonStoreTrucks:"src/assets/ressources-test/json-trucks-test.json",
     }),
     getters: {
         getGeoJsonFires: (state):string =>{ return state.geoJsonStoreFires},

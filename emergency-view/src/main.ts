@@ -4,6 +4,13 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+import FirePoint from '@/components/points/FirePoint.vue'
+import StationPoint from '@/components/points/StationPoint.vue'
+import TruckPoint from '@/components/points/TruckPoint.vue'
+import Map from '@/components/Map.vue'
+import PointSelection from '@/components/points/action/PointSelection.vue'
+
+
 import OpenLayersMap from 'vue3-openlayers'
 import 'vue3-openlayers/dist/vue3-openlayers.css'
 
@@ -24,6 +31,13 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)
+
+app.component('FirePoint',FirePoint)
+app.component('StationPoint',StationPoint)
+app.component('TruckPoint',TruckPoint)
+app.component('PointSelection',PointSelection)
+app.component('Map',Map)
+
 
 app.use(OpenLayersMap)
 
