@@ -1,12 +1,11 @@
 //Stocke les geoJson lors du démarrage
-
 import { defineStore } from 'pinia'
 
 export const useGeoJsonStore = defineStore({
     id:'geoJsonStore',
     state: () => ({
         geoJsonStoreFires:"src/assets/ressources-test/json-fires-test.json",
-        geoJsonStoreStations:"src/assets/ressources-test/json-stations-test.json",
+        geoJsonStoreStations:import.meta.env.VITE_BASE_URL_API+'/api/resource/station/geo',
         geoJsonStoreTrucks:"src/assets/ressources-test/json-trucks-test.json",
     }),
     getters: {
@@ -15,14 +14,5 @@ export const useGeoJsonStore = defineStore({
         getGeoJsonTrucks: (state):string =>{ return state.geoJsonStoreTrucks},
     },
     actions:{
-        updateGeoJsonFire(geoJson:string){ 
-            this.geoJsonStoreFires  = geoJson
-        },
-        updateGeoJsonStations(geoJson:string){ 
-            this.geoJsonStoreStations  = geoJson
-        },
-        updateGeoJsonTrucks(geoJson:string){ 
-            this.geoJsonStoreTrucks  = geoJson
-        },
     }
 })
