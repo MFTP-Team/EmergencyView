@@ -13,7 +13,6 @@ export default defineComponent({
     const zoom = ref(16)
     const rotation = ref(0)
 
-
     return {
       center,
       projection,

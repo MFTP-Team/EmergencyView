@@ -8,7 +8,7 @@
                 "coordinates": [4.6,45.783726561289825]
             },
             "properties": {
-                "prop0": "value0",
+                "id": 1,
                 "type":"FIRE"
             }
         }

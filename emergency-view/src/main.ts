@@ -18,6 +18,9 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import FireCard from './components/card/FireCard.vue'
+import StationCard from './components/card/StationCard.vue'
+import TruckCard from './components/card/TruckCard.vue'
 
 const vuetify = createVuetify({
     components,
@@ -34,8 +37,14 @@ app.use(vuetify)
 
 app.component('FirePoint',FirePoint)
 app.component('StationPoint',StationPoint)
+
 app.component('TruckPoint',TruckPoint)
 app.component('PointSelection',PointSelection)
+
+app.component('TruckCard',TruckCard)
+app.component('FireCard',FireCard)
+app.component('StationCard',StationCard)
+
 app.component('Map',Map)
 
 

@@ -3,6 +3,12 @@
 import { defineComponent } from 'vue'
 import { useDrawerStateStore } from '../stores/drawerState'
 import { ref } from 'vue'
+import { pointType } from '@/models/enums/pointType'
+
+import FireCard from './card/FireCard.vue'
+import StationCard from './card/StationCard.vue'
+import TruckCard from './card/TruckCard.vue'
+
 
 import { storeToRefs } from 'pinia'
 
@@ -13,9 +19,12 @@ import { storeToRefs } from 'pinia'
     const refStore = storeToRefs(store)
     
     const drawerState = ref(refStore.drawerState)
+    const drawerDataType = ref(refStore.drawerDataType)
 
     return{
-        drawerState
+        drawerState,
+        drawerDataType,
+        pointType
     }
    },
 })
@@ -23,21 +32,10 @@ import { storeToRefs } from 'pinia'
 
 
 <template>
-    <v-navigation-drawer
-          v-model="drawerState"
-          temporary
-    >
-        <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/men/78.jpg"
-            title="John Leider"
-        ></v-list-item>
-  
-        <v-divider></v-divider>
-  
-        <v-list density="compact" nav>
-            <v-list-item prepend-icon="mdi-view-dashboard" title="Home" value="home"></v-list-item>
-            <v-list-item prepend-icon="mdi-forum" title="About" value="about"></v-list-item>
-        </v-list>
+    <v-navigation-drawer v-model="drawerState">
+        <StationCard v-show='drawerDataType == pointType.STATION'/>
+        <FireCard v-show='drawerDataType == pointType.FIRE'/>
+        <TruckCard v-show='drawerDataType == pointType.TRUCK'/>
     </v-navigation-drawer>
 </template>
 
