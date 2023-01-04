@@ -4,10 +4,7 @@ import { defineComponent } from 'vue'
 
 import stationIcon from '@/assets/icone/fire-station.png'
 import { useGeoJsonStore } from '@/stores/geoJsonStore'
-import { useDrawerStateStore } from '@/stores/drawerState'
 import { useStationStore } from '@/stores/stationStore'
-
-import { pointType } from '@/models/enums/pointType'
 
 export default defineComponent({
 
@@ -22,20 +19,12 @@ export default defineComponent({
 
     const geoJsonStore = useGeoJsonStore()
     const stationLocalisation:string = geoJsonStore.getGeoJsonStations
-
-    const drawerStore = useDrawerStateStore()
     const stationStore = useStationStore()
 
 
     const actionOnSelect = (event:any) => {
-      
       const selectedId = event.selected[0].values_.id
-
-      if(selectedId !== null && selectedId !== undefined){
-        drawerStore.updateDrawerDataType(pointType.STATION)
-        stationStore.loadStation(selectedId)
-      }
-      drawerStore.updateDrawerState()
+      stationStore.addStation(selectedId)
     }
 
     const filterSelection = (feature:any) =>{

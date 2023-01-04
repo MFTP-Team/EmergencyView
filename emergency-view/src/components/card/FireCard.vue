@@ -1,10 +1,17 @@
   
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { ref } from 'vue'
+import { defineComponent, toRef,ref,  } from 'vue'
+import type { PropType } from 'vue'
+import type { Fire } from '@/models/Fire'
 
   export default defineComponent({
-   setup(){
+    props: {
+      data: { 
+        type: Object as PropType<Fire>, 
+        required: true
+      },
+    },
+   setup(props){
     const show = ref(false)
 
     return{

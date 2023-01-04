@@ -1,10 +1,17 @@
   
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { ref } from 'vue'
+import type { Station } from '@/models/Station'
+import { defineComponent, ref } from 'vue'
+import type { PropType } from 'vue'
 
   export default defineComponent({
-   setup(){
+    props: {
+      data: { 
+        type: Object as PropType<Station>, 
+        required: true
+      },
+    },
+   setup(props){
     const show = ref(false)
 
     return{

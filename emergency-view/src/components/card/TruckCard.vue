@@ -1,15 +1,18 @@
   
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { ref } from 'vue'
-import { useTruckStore } from '@/stores/truckStore'
+import { defineComponent,ref  } from 'vue'
+import type { PropType} from 'vue'
+import type { Truck } from '@/models/Truck'
 
   export default defineComponent({
-   setup(){
+    props: {
+      data: { 
+        type: Object as PropType<Truck>, 
+        required: true
+      },
+    },
+   setup(props){
     const show = ref(false)
-
-    const truckStore = useTruckStore()
-    const truckData = truckStore.getTruck
 
     return{
       show

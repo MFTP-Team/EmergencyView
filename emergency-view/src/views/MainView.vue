@@ -4,14 +4,10 @@ import Drawer from'../components/Drawer.vue'
 </script>
 
 <template>
-    <v-card>
-      <v-layout>
-        <Drawer></Drawer>
-        <v-main style="height: 100vh">
-          <div>
-            <Map></Map>
-          </div>
-        </v-main>
-      </v-layout>
-    </v-card>
+  <v-app>
+    <Drawer></Drawer>
+    <v-main style="height: 100vh">
+      <Map></Map>
+    </v-main>
+  </v-app>
 </template>

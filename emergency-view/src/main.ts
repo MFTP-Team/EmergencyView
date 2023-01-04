@@ -9,7 +9,9 @@ import StationPoint from '@/components/points/StationPoint.vue'
 import TruckPoint from '@/components/points/TruckPoint.vue'
 import Map from '@/components/Map.vue'
 import PointSelection from '@/components/points/action/PointSelection.vue'
-
+import FireCard from './components/card/FireCard.vue'
+import StationCard from './components/card/StationCard.vue'
+import TruckCard from './components/card/TruckCard.vue'
 
 import OpenLayersMap from 'vue3-openlayers'
 import 'vue3-openlayers/dist/vue3-openlayers.css'
@@ -18,9 +20,8 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import FireCard from './components/card/FireCard.vue'
-import StationCard from './components/card/StationCard.vue'
-import TruckCard from './components/card/TruckCard.vue'
+
+import '@mdi/font/css/materialdesignicons.css'
 
 const vuetify = createVuetify({
     components,
@@ -46,8 +47,6 @@ app.component('FireCard',FireCard)
 app.component('StationCard',StationCard)
 
 app.component('Map',Map)
-
-
 app.use(OpenLayersMap)
 
 app.mount('#app')

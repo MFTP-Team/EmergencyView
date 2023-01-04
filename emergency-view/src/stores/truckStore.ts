@@ -2,16 +2,20 @@ import { defineStore } from 'pinia'
 import type { Truck } from '@/models/Truck'
 
 export const useTruckStore = defineStore({
-    id:'TruckStore',
+    id:'truckStore',
     state: () => ({
-        truck: undefined as Truck | undefined
+        truckArray: [] as Truck[]
     }),
     getters: {
-        getTruck: (state):Truck | undefined =>{ return state.truck},
+        getAllTruck: (state):Truck[]=>{ return state.truckArray},
     },
     actions:{
-        loadTruck(id:Number){ 
+        addTruck(id:Number){ 
             //TO_DO : requete axios
+        },
+        deleteTruck(id:Number){
+           const indexToRemove:any = this.truckArray?.find(item =>{ return item.id === id})
+           this.truckArray?.splice(indexToRemove,indexToRemove)
         }
     }
 })

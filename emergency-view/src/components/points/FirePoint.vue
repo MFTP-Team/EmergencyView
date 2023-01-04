@@ -4,10 +4,7 @@ import { defineComponent } from 'vue'
 
 import fireIcon from '@/assets/icone/fire.png'
 import { useGeoJsonStore } from '@/stores/geoJsonStore'
-import { useDrawerStateStore } from '@/stores/drawerState'
 import { useFireStore } from '@/stores/fireStore'
-
-import { pointType } from '@/models/enums/pointType'
 
 export default defineComponent({
 
@@ -23,21 +20,15 @@ export default defineComponent({
     const geoJsonStore = useGeoJsonStore()
 
     const fireLocalisation:string = geoJsonStore.getGeoJsonFires
-
-    const drawerStore = useDrawerStateStore()
     const fireStore = useFireStore()
 
     const actionOnSelect = (event:any) => {  
       const selectedId = event.selected[0].values_.id
-      drawerStore.updateDrawerDataType(pointType.FIRE)
-      fireStore.loadFire(selectedId)
-      drawerStore.updateDrawerState()
+      fireStore.addFire(selectedId)
     }
 
     const filterSelection = (feature:any) =>{
       return feature.values_.type == "FIRE";
-
-      console.log()
     }
     
 

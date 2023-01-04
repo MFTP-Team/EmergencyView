@@ -26,7 +26,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100vh; widght:100vw">
+    <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100vh; widght:100%">
 
         <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" 
         :projection="projection" />
