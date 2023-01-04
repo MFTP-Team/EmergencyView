@@ -4,9 +4,7 @@ import { defineComponent } from 'vue'
 
 import truckIcon from '@/assets/icone/fire-truck.png'
 import { useGeoJsonStore } from '@/stores/geoJsonStore'
-import { useDrawerStateStore } from '@/stores/drawerState'
 import { useTruckStore } from '@/stores/truckStore'
-import { pointType } from '@/models/enums/pointType'
 
 import PointSelection from './action/PointSelection.vue'
 
@@ -20,24 +18,13 @@ export default defineComponent({
 
     const geoJsonStore = useGeoJsonStore()
     const trucksLocalisation:string = geoJsonStore.getGeoJsonTrucks
-
-    const drawerStore = useDrawerStateStore()
     const truckStore = useTruckStore()
 
     const actionOnSelect = (event:any) => {
 
       const selectedId = event.selected[0].values_.id
 
-      drawerStore.updateDrawerDataType(pointType.TRUCK)
-
-      truckStore.loadTruck(selectedId)
-
-      drawerStore.updateDrawerState()
-
-      
-      console.log()
-
-      console.log()
+      truckStore.addTruck(selectedId)
 
     }
 
