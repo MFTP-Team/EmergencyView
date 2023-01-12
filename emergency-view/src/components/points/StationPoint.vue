@@ -63,7 +63,7 @@ export default defineComponent({
     <ol-source-vector :url="stationLocalisation" :format="geoJson" :strategy="bbox" :projection="projection">
     </ol-source-vector>
     <ol-style>
-      <ol-style-icon :src="stationIcon" :scale="0.05"></ol-style-icon>
+      <ol-style-icon :src="stationIcon" :scale="0.1"></ol-style-icon>
     </ol-style>
   </ol-vector-layer>
 </template>

@@ -13,7 +13,7 @@ export const useStationStore = defineStore({
     actions:{
         async addStation(id:number){ 
             try {
-                const response = await axios.get(import.meta.env.VITE_BASE_URL_API + '/api/resource/get/station'+id)
+                const response = await axios.get(import.meta.env.VITE_BASE_URL_API + '/api/resource/get/station/'+id)
                 this.stationArray.push(response.data)
             } catch (error) {
                 console.log(error)
@@ -25,7 +25,7 @@ export const useStationStore = defineStore({
         },
         async deleteStationFromDB(id:number){
             try {
-                const response = await axios.delete(import.meta.env.VITE_BASE_URL_API + '/api/resource/delete/station'+id)
+                const response = await axios.delete(import.meta.env.VITE_BASE_URL_API + '/api/resource/delete/station/'+id)
                 this.deleteStationFromArray(id)
             } catch (error) {
                 console.log(error)

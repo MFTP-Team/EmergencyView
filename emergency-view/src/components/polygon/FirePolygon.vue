@@ -2,7 +2,6 @@
 import {inject, ref} from 'vue'
 import { defineComponent } from 'vue'
 
-import stationIcon from '@/assets/icone/fire-station.png'
 import { useGeoJsonStore } from '@/stores/geoJsonStore'
 
 export default defineComponent({
@@ -23,7 +22,6 @@ export default defineComponent({
       projection,
       geoJson,
       fireLocalisation,
-      stationIcon,
       bbox 
     }
   },
