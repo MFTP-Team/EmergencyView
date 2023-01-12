@@ -15,44 +15,17 @@ import { storeToRefs } from 'pinia'
 
 export default defineComponent({
     setup() {
-        const center = ref([4.869733536816722, 45.783726561289825]);
-        const projection = ref("EPSG:4326");
-        const zoom = ref(16);
-        const rotation = ref(0);
+      const center = ref([4.869733536816722, 45.783726561289825]);
+      const projection = ref("EPSG:4326");
+      const zoom = ref(16);
+      const rotation = ref(0);
         
-        const contextMenuItems:Ref<Object[]> = ref([])
-        const popUpStateStore = usePopUpStateStore()
+      const contextMenuItems:Ref<Object[]> = ref([])
+      const popUpStateStore = usePopUpStateStore()
 
-        const alertStore = useAlertStore()
-        const alertStoreRef = storeToRefs(alertStore)
-        const alertStoreSizeArray = ref(alertStoreRef.alertArray.value.length)
-
-        contextMenuItems.value = [{
-            text: 'Ajouter feu',
-            icon: fireIcon,
-            callback: (val:any) => {
-                popUpStateStore.setMaxValue(20)
-                popUpStateStore.setMinValue(1)
-                popUpStateStore.setValueName("Intensite")
-                popUpStateStore.setCoord(val.coordinate)
-                popUpStateStore.openPopUp()   
-
-            } // `center` is your callback function
-        },
-        {
-            text: 'Ajouter camion',
-            icon: truckIcon,
-            callback: (val:any) => {
-                popUpStateStore.setMaxValue(10)
-                popUpStateStore.setMinValue(1)
-                popUpStateStore.setValueName("Puissance")
-                popUpStateStore.setCoord(val.coordinate)
-                popUpStateStore.openPopUp()   
-            }
-        },
-            '-' // this is a separator
-    ]
-
+      const alertStore = useAlertStore()
+      const alertStoreRef = storeToRefs(alertStore)
+      const alertStoreSizeArray = ref(alertStoreRef.alertArray.value.length)
 
 
     return {
@@ -73,10 +46,15 @@ export default defineComponent({
 <template>
   <div>
     <router-link to="/alert" custom v-slot="{ navigate }">
-        <v-badge floating id="overlayMenu" :content="alertStoreSizeArray" @click="navigate" >
+        <v-badge floating id="overlayAlert" :content="alertStoreSizeArray" @click="navigate" >
             <v-icon icon="mdi-alert-circle" size="x-large"></v-icon>    
         </v-badge>
     </router-link>  
+    <router-link to="/resource" custom v-slot="{ navigate }">
+        <v-badge floating id="overlayMenu" :content="alertStoreSizeArray" @click="navigate" >
+            <v-icon icon="mdi-account-group" size="x-large"></v-icon>    
+        </v-badge>
+    </router-link>
     <ol-map :loadTilesWhileAnimating="true" :loadTilesWhileInteracting="true" style="height:100vh; widght:100%" ref="map">
 
         <ol-view ref="view" :center="center" :rotation="rotation" :zoom="zoom" 
@@ -97,7 +75,13 @@ export default defineComponent({
 </template>
 
 <style scoped>
-#overlayMenu {
+#overlayIncident{
+    position: absolute;
+    z-index: 1;
+    top: 100px;
+    right: 50px;
+}
+#overlayAlert {
     position: absolute;
     z-index: 1;
     top: 50px;
