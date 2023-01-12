@@ -2,46 +2,47 @@
 import {inject, ref} from 'vue'
 import { defineComponent } from 'vue'
 
-import fireIcon from '@/assets/icone/fire.png'
+import truckIcon from '@/assets/icone/fire-truck-icon.svg'
 import { useGeoJsonStore } from '@/stores/geoJsonStore'
-import { useFireStore } from '@/stores/fireStore'
+import { useTruckStore } from '@/stores/truckStore'
+
+import PointSelection from './action/PointSelection.vue'
 
 export default defineComponent({
 
   setup() {
-    const center = ref([4.869733536816722,45.783726561289825])
     const projection = ref('EPSG:4326')
-    const zoom = ref(16)
-    const rotation = ref(0)
 
     const format = inject('ol-format');
     const geoJson = new format.GeoJSON();
 
     const geoJsonStore = useGeoJsonStore()
+    const trucksLocalisation:string = geoJsonStore.getGeoJsonTrucks
+    const truckStore = useTruckStore()
 
-    const fireLocalisation:string = geoJsonStore.getGeoJsonFires
-    const fireStore = useFireStore()
+    const strategy = inject('ol-loadingstrategy');
+    const bbox = strategy.bbox;
 
-    const actionOnSelect = (event:any) => {  
-      const selectedId = event.selected[0].values_.id
-      fireStore.addFire(selectedId)
+    const actionOnSelect = (event:any) => {
+      if(event.selected.length !== 0){
+        const selectedId = event.selected[0].values_.id
+        truckStore.addTruck(selectedId)
+      }
+
     }
 
     const filterSelection = (feature:any) =>{
-      return feature.values_.type == "FIRE";
+      return feature.values_.type == "TRUCK";
     }
-    
 
     return {
-      center,
       projection,
-      zoom,
-      rotation,
       geoJson,
-      fireLocalisation,
-      fireIcon,
+      trucksLocalisation,
+      truckIcon,
       actionOnSelect,
-      filterSelection
+      filterSelection,
+      bbox
     }
   },
 })
@@ -49,13 +50,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <PointSelection :actionOnSelect="actionOnSelect" :filterSelection="filterSelection" :markerIcon="fireIcon"/>
+
+  <PointSelection :actionOnSelect="actionOnSelect" :filterSelection="filterSelection" :markerIcon="truckIcon"/>
 
   <ol-vector-layer>
-    <ol-source-vector :url="fireLocalisation" :format="geoJson" :projection="projection">
+    <ol-source-vector :url="trucksLocalisation" :strategy="bbox" :format="geoJson" :projection="projection">
     </ol-source-vector>
     <ol-style>
-      <ol-style-icon :src="fireIcon" :scale="0.1"></ol-style-icon>
+      <ol-style-icon :src="truckIcon" :scale="0.05"></ol-style-icon>
     </ol-style>
   </ol-vector-layer>
 </template>

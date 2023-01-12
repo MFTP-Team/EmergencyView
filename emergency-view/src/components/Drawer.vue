@@ -28,12 +28,12 @@ import { storeToRefs } from 'pinia'
     const refTruckStore = storeToRefs(truckStore)
 
     const firesArray =ref(refFireStore.fireArray)
-    const stationsArray = ref(refStationStore.stationArray)
+    const stationArray = ref(refStationStore.stationArray)
     const trucksArray = ref(refTruckStore.truckArray)
-
+    
     return{
         firesArray,
-        stationsArray,
+        stationArray,
         trucksArray,
         drawer,
         mini,
@@ -47,12 +47,13 @@ import { storeToRefs } from 'pinia'
 <template>
  <v-navigation-drawer
         v-model="drawer"
+        :width="400"
         :rail="rail"
         permanent
         @click="rail = false"
       >
         <v-list-item
-          title="Emergency Manager"
+          title="Simulateur Manager"
         >
           <template v-slot:append>
             <v-btn
@@ -66,29 +67,30 @@ import { storeToRefs } from 'pinia'
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-            <v-list-item prepend-icon="mdi-fire" title="Feux"></v-list-item>
+            <v-list-item 
+                prepend-icon=""
+                v-for="station in stationArray"
+            >
+              <v-expansion-panels>
+                <StationCard :data="station"></StationCard>
+              </v-expansion-panels>
+            </v-list-item>
+
             <v-list-item 
                 v-for="fire in firesArray"
             >
+              <v-expansion-panels>
                 <FireCard :data="fire"></FireCard>
+              </v-expansion-panels>
             </v-list-item>
 
-            <v-list-item prepend-icon="mdi-fire-truck" title="Camions"></v-list-item>  
             <v-list-item 
                 v-for="truck in trucksArray"
             >
+              <v-expansion-panels>  
                 <TruckCard :data="truck"></TruckCard>
-            </v-list-item>
-
-            <v-list-item prepend-icon="mdi-shield-home" title="Casernes"></v-list-item>
-            <v-list-item 
-                prepend-icon=""
-                v-for="station in stationsArray"
-            >
-                <StationCard :data="station"></StationCard>
+              </v-expansion-panels>
             </v-list-item>
         </v-list>
     </v-navigation-drawer>
 </template>
-
-

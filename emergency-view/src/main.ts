@@ -7,11 +7,16 @@ import router from './router'
 import FirePoint from '@/components/points/FirePoint.vue'
 import StationPoint from '@/components/points/StationPoint.vue'
 import TruckPoint from '@/components/points/TruckPoint.vue'
+import FirePolygon from './components/polygon/FirePolygon.vue'
 import Map from '@/components/Map.vue'
 import PointSelection from '@/components/points/action/PointSelection.vue'
+import ContextMenu from '@/components/points/action/PointSelection.vue'
 import FireCard from './components/card/FireCard.vue'
 import StationCard from './components/card/StationCard.vue'
 import TruckCard from './components/card/TruckCard.vue'
+import Drawer from './components/Drawer.vue'
+import PopUp from './components/PopUp.vue'
+import AlertList from './components/AlertList.vue'
 
 import OpenLayersMap from 'vue3-openlayers'
 import 'vue3-openlayers/dist/vue3-openlayers.css'
@@ -40,11 +45,17 @@ app.component('FirePoint',FirePoint)
 app.component('StationPoint',StationPoint)
 
 app.component('TruckPoint',TruckPoint)
+app.component('FirePolygon',FirePolygon)
 app.component('PointSelection',PointSelection)
 
 app.component('TruckCard',TruckCard)
 app.component('FireCard',FireCard)
 app.component('StationCard',StationCard)
+app.component('ContextMenu',ContextMenu)
+
+app.component('PopUp',PopUp)
+app.component('Drawer',Drawer)
+app.component('AlertList',AlertList)
 
 app.component('Map',Map)
 app.use(OpenLayersMap)

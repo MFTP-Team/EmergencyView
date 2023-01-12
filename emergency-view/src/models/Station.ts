@@ -1,5 +1,5 @@
 export interface Station{
-    id:Number,
-    longitude:Number, 
-    latitude:Number
+    id:number,
+    longitude:number, 
+    latitude:number,
 }

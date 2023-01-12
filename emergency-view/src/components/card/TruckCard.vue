@@ -1,8 +1,10 @@
   
 <script lang="ts">
-import { defineComponent,ref  } from 'vue'
+import { defineComponent,ref, toRef  } from 'vue'
+import type { Ref } from 'vue'
 import type { PropType} from 'vue'
 import type { Truck } from '@/models/Truck'
+import { useTruckStore } from '@/stores/truckStore'
 
   export default defineComponent({
     props: {
@@ -11,11 +13,33 @@ import type { Truck } from '@/models/Truck'
         required: true
       },
     },
-   setup(props){
-    const show = ref(false)
+    setup(props){
+    const truck = toRef(props,"data")
+    const truckStore = useTruckStore()
+
+    const isSliderDisable:Ref<boolean> = ref(true)
+
+    function deleteTruck(){
+      if(isSliderDisable.value){
+        truckStore.deleteTruckFromDB(truck.value.id)
+      }
+    }
+
+    function updateTruck(){
+      if(isSliderDisable.value){
+        isSliderDisable.value = false
+      }else{ 
+        truckStore.updateTruck(truck.value)
+        isSliderDisable.value = true
+      }
+    }
+
 
     return{
-      show
+        truck,
+        isSliderDisable,
+        updateTruck,
+        deleteTruck
     }
    },
 })
@@ -23,50 +47,80 @@ import type { Truck } from '@/models/Truck'
 
 
 <template>
-  <v-card
-    class="mx-auto"
-    max-width="344"
-  >
-    <v-img
-      src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Camion_Citerne_Feux_For%C3%AAts_2000.jpg"
-      height="200px"
-      cover
-    ></v-img>
+  <v-expansion-panel>
+      <v-expansion-panel-title expand-icon="mdi-plus" collapse-icon="mdi-minus">
+        <v-icon icon="mdi-fire-truck"></v-icon>
+        Camions n°{{truck.id}}
+      </v-expansion-panel-title>
+      
+        <v-expansion-panel-text>
+        <div>
+          <v-btn style="float:right;" prepend-icon="mdi-close" variant="plain"></v-btn>
+        </div>
 
-    <v-card-title>
-      Truck
-    </v-card-title>
+        <v-container>
+          <v-row>
+            <v-col>
+              Longitude :
+              <v-text-field
+                v-model="truck.longitude"
+                hide-details
+                variant="outlined"
+                type="number"
+                step="0.000001"
+                :disabled="isSliderDisable"
+              ></v-text-field>
+            </v-col>
 
-    <v-card-subtitle>
-        PINON PINPON PINPON
-    </v-card-subtitle>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-lighten-2"
-        variant="text"
-      >
-        Explore
-      </v-btn>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-        @click="show = !show"
-      ></v-btn>
-    </v-card-actions>
-
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
-
-        <v-card-text>
-          PINPON PINPON PINPON PIN PON PIN PON 
-        </v-card-text>
-      </div>
-    </v-expand-transition>
-  </v-card>
+            <v-col>
+              Latitude :
+              <v-text-field
+                v-model="truck.latitude"
+                hide-details
+                type="number"
+                step="0.000001"
+                variant="outlined"
+                :disabled="isSliderDisable"
+              ></v-text-field>
+            </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-slider
+              v-model="truck.power"
+              :step="5"
+              label="Radius"
+              hide-details
+              :disabled="isSliderDisable"
+              class="ma-4"
+            >
+              <template v-slot:append>
+                <v-text-field
+                  v-model="truck.power"
+                  type="number"
+                  style="width: 80px"
+                  density="compact"
+                  hide-details
+                  variant="outlined"
+                  :max="10"
+                  :min="0"
+                  :disabled="isSliderDisable"
+                ></v-text-field>
+              </template>
+            </v-slider>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn @click="updateTruck">{{isSliderDisable ? "Modifier" : "Valider"}}</v-btn>
+          </v-col>
+          <v-col>
+            <v-btn :disabled="!isSliderDisable" @click="deleteTruck">Supprimer</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+      </v-expansion-panel-text>
+    </v-expansion-panel>
 </template>
 
 

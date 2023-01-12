@@ -1,8 +1,10 @@
   
 <script lang="ts">
 import type { Station } from '@/models/Station'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, toRef } from 'vue'
+import type {Ref} from 'vue'
 import type { PropType } from 'vue'
+import { useStationStore } from '@/stores/stationStore'
 
   export default defineComponent({
     props: {
@@ -12,10 +14,33 @@ import type { PropType } from 'vue'
       },
     },
    setup(props){
-    const show = ref(false)
+    const station = toRef(props,"data")
+    const stationStore = useStationStore()
+
+    const isSliderDisable:Ref<boolean> = ref(true)
+
+    function deleteStation(){
+      if(isSliderDisable.value){
+        stationStore.deleteStationFromDB(station.value.id)
+      }
+    }
+
+    function updateStation(){
+      if(isSliderDisable.value){
+        isSliderDisable.value = false
+      }else{ 
+        stationStore.updateStation(station.value)
+        isSliderDisable.value = true
+      }
+    }
+
+    
 
     return{
-        show
+      isSliderDisable,
+      station,
+      updateStation,
+      deleteStation
     }
    },
 })
@@ -23,50 +48,54 @@ import type { PropType } from 'vue'
 
 
 <template>
-  <v-card
-    class="mx-auto"
-    max-width="344"
-  >
-    <v-img
-      src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Caserne_Larchambaudie.JPG"
-      height="200px"
-      cover
-    ></v-img>
-
-    <v-card-title>
-      Caserne
-    </v-card-title>
-
-    <v-card-subtitle>
-        C'est le repos
-    </v-card-subtitle>
-
-    <v-card-actions>
-      <v-btn
-        color="orange-lighten-2"
-        variant="text"
-      >
-        Explore
-      </v-btn>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-        @click="show = !show"
-      ></v-btn>
-    </v-card-actions>
-
-    <v-expand-transition>
-      <div v-show="show">
-        <v-divider></v-divider>
-
-        <v-card-text>
-          REPOS REPOS REPOS REPOS
-        </v-card-text>
+  <v-expansion-panel>
+    <v-expansion-panel-title expand-icon="mdi-plus" collapse-icon="mdi-minus">
+      <v-icon icon="mdi-access-point"></v-icon>
+      Capteur n°{{station.id}}
+    </v-expansion-panel-title>
+    
+    <v-expansion-panel-text>
+      <div>
+        <v-btn style="float:right;" prepend-icon="mdi-close" variant="plain"></v-btn>
       </div>
-    </v-expand-transition>
-  </v-card>
+
+      <v-container>
+        <v-row>
+          <v-col>
+            Longitude :
+            <v-text-field
+              v-model="station.longitude"
+              hide-details
+              variant="outlined"
+              type="number"
+              step="0.000001"
+              :disabled="isSliderDisable"
+            ></v-text-field>
+          </v-col>
+
+          <v-col>
+            Latitude :
+            <v-text-field
+              v-model="station.latitude"
+              hide-details
+              type="number"
+              step="0.000001"
+              variant="outlined"
+              :disabled="isSliderDisable"
+            ></v-text-field>
+          </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-btn @click="updateStation">{{isSliderDisable ? "Modifier" : "Valider"}}</v-btn>
+        </v-col>
+        <v-col>
+          <v-btn :disabled="!isSliderDisable" @click="deleteStation">Supprimer</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+    </v-expansion-panel-text>
+  </v-expansion-panel>
 </template>
 
 

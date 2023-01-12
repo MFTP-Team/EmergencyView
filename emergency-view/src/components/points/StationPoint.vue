@@ -14,23 +14,30 @@ export default defineComponent({
     const zoom = ref(16)
     const rotation = ref(0)
 
+    const radius = ref(180)
+
     const format = inject('ol-format');
     const geoJson = new format.GeoJSON();
 
+    const strategy = inject('ol-loadingstrategy');
+    const bbox = strategy.bbox;
+
     const geoJsonStore = useGeoJsonStore()
-    const stationLocalisation:string = geoJsonStore.getGeoJsonStations
+    const stationLocalisation:string = geoJsonStore.getGeoJsonPointStations
     const stationStore = useStationStore()
 
 
     const actionOnSelect = (event:any) => {
-      const selectedId = event.selected[0].values_.id
-      stationStore.addStation(selectedId)
+      if(event.selected.length !== 0 ){
+        const selectedId = event.selected[0].values_.id
+        stationStore.addStation(selectedId)
+      }
+
     }
 
     const filterSelection = (feature:any) =>{
-      return feature.values_.type == "STATION";
+      return feature.values_.type == "SENSOR";
     }
-    
 
     return {
       center,
@@ -41,7 +48,9 @@ export default defineComponent({
       stationLocalisation,
       stationIcon,
       actionOnSelect,
-      filterSelection
+      filterSelection,
+      bbox,
+      radius
     }
   },
 })
@@ -50,12 +59,11 @@ export default defineComponent({
 
 <template>
   <PointSelection :actionOnSelect="actionOnSelect" :filterSelection="filterSelection" :markerIcon="stationIcon"/>
-
   <ol-vector-layer>
-    <ol-source-vector :url="stationLocalisation" :format="geoJson" :projection="projection">
+    <ol-source-vector :url="stationLocalisation" :format="geoJson" :strategy="bbox" :projection="projection">
     </ol-source-vector>
     <ol-style>
-      <ol-style-icon :src="stationIcon" :scale="0.1"></ol-style-icon>
+      <ol-style-icon :src="stationIcon" :scale="0.05"></ol-style-icon>
     </ol-style>
   </ol-vector-layer>
 </template>

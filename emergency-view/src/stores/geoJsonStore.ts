@@ -4,13 +4,15 @@ import { defineStore } from 'pinia'
 export const useGeoJsonStore = defineStore({
     id:'geoJsonStore',
     state: () => ({
-        geoJsonStoreFires:"src/assets/ressources-test/json-fires-test.json",
-        geoJsonStoreStations:import.meta.env.VITE_BASE_URL_API+'/api/resource/station/geo',
-        geoJsonStoreTrucks:"src/assets/ressources-test/json-trucks-test.json",
+        geoJsonStorePolygonFire:import.meta.env.VITE_BASE_URL_API+'/api/fire/geo/polygon',
+        geoJsonStorePointFire:import.meta.env.VITE_BASE_URL_API+'/api/fire/geo/point',
+        geoJsonStorePointStation:import.meta.env.VITE_BASE_URL_API+'/api/resource/station/geo/point',
+        geoJsonStoreTrucks:import.meta.env.VITE_BASE_URL_API+'/api/resource/truck/geo/point',
     }),
     getters: {
-        getGeoJsonFires: (state):string =>{ return state.geoJsonStoreFires},
-        getGeoJsonStations: (state):string =>{ return state.geoJsonStoreStations},
+        getGeoJsonPolygonFires: (state):string =>{ return state.geoJsonStorePolygonFire},
+        getGeoJsonPointFires: (state):string =>{ return state.geoJsonStorePointFire},
+        getGeoJsonPointStations: (state):string =>{ return state.geoJsonStorePointStation},
         getGeoJsonTrucks: (state):string =>{ return state.geoJsonStoreTrucks},
     },
     actions:{
