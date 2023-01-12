@@ -13,7 +13,7 @@ export const useStationStore = defineStore({
     actions:{
         async addStation(id:number){ 
             try {
-                const response = await axios.get(import.meta.env.VITE_BASE_URL_API + '/api/station/get/'+id)
+                const response = await axios.get(import.meta.env.VITE_BASE_URL_API + '/api/resource/get/station'+id)
                 this.stationArray.push(response.data)
             } catch (error) {
                 console.log(error)
@@ -25,7 +25,7 @@ export const useStationStore = defineStore({
         },
         async deleteStationFromDB(id:number){
             try {
-                const response = await axios.delete(import.meta.env.VITE_BASE_URL_API + '/api/station/delete/'+id)
+                const response = await axios.delete(import.meta.env.VITE_BASE_URL_API + '/api/resource/delete/station'+id)
                 this.deleteStationFromArray(id)
             } catch (error) {
                 console.log(error)
@@ -35,7 +35,7 @@ export const useStationStore = defineStore({
             try {
                 const indexToUpdate:any = this.stationArray?.find(item =>{ return item.id === station.id})
                 const response = await axios.put(
-                    import.meta.env.VITE_BASE_URL_API + '/api/station/edit',
+                    import.meta.env.VITE_BASE_URL_API + '/api/resource/edit/station',
                     { 
                         id:station.id,
                         latitude:station.latitude,
@@ -54,7 +54,7 @@ export const useStationStore = defineStore({
         async addStationToBDD(latitude:number,longitude:number,radius:number){
             try {
                 const response = await axios.post(
-                    import.meta.env.VITE_BASE_URL_API + '/api/station/add',
+                    import.meta.env.VITE_BASE_URL_API + '/api/resource/add/station',
                     { 
                         latitude:latitude,
                         longitude:longitude,

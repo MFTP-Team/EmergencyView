@@ -13,7 +13,7 @@ export const useTruckStore = defineStore({
     actions:{
         async addTruck(id:number){ 
             try {
-                const response = await axios.get(import.meta.env.VITE_BASE_URL_API + '/api/truck/get/'+id)
+                const response = await axios.get(import.meta.env.VITE_BASE_URL_API + '/api/resource/get/truck/'+id)
                 this.truckArray.push(response.data)
             } catch (error) {
                 console.log(error)
@@ -25,7 +25,7 @@ export const useTruckStore = defineStore({
          },
          async deleteTruckFromDB(id:number){
              try {
-                 const response = await axios.delete(import.meta.env.VITE_BASE_URL_API + '/api/truck/delete/'+id)
+                 const response = await axios.delete(import.meta.env.VITE_BASE_URL_API + '/api/resource/delete/truck/'+id)
                  this.deleteTruckFromArray(id)
              } catch (error) {
                  console.log(error)
@@ -35,7 +35,7 @@ export const useTruckStore = defineStore({
              try {
                  const indexToUpdate:any = this.truckArray?.find(item =>{ return item.id === truck.id})
                  const response = await axios.put(
-                     import.meta.env.VITE_BASE_URL_API + '/api/truck/edit',
+                     import.meta.env.VITE_BASE_URL_API + '/api/resource/edit/truck',
                      { 
                          id:truck.id,
                          latitude:truck.latitude,
@@ -55,7 +55,7 @@ export const useTruckStore = defineStore({
         async addTruckToBDD(latitude:number,longitude:number,power:number){
             try {
                 const response = await axios.post(
-                    import.meta.env.VITE_BASE_URL_API + '/api/truck/add',
+                    import.meta.env.VITE_BASE_URL_API + '/api/resource/add/truck',
                     { 
                         latitude:latitude,
                         longitude:longitude,
