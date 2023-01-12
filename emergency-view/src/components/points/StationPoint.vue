@@ -36,7 +36,7 @@ export default defineComponent({
     }
 
     const filterSelection = (feature:any) =>{
-      return feature.values_.type == "SENSOR";
+      return feature.values_.type == "STATION";
     }
 
     return {
